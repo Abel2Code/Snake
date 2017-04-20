@@ -7,10 +7,30 @@ public class BoardGUIPane extends GridPane{
 	Label[][] labels;
 	int rows = 25;
 	int columns = 51;
+	Snake snake;
 	
 	public void startGame(){
 		setUpLabels();
+		snake = new Snake(0,0);
 	}
+	
+	public void moveUp(){
+		
+	}
+	
+	public void moveDown(){
+		
+	}
+	
+	public void moveLeft(){
+		
+	}
+	
+	public void moveRight(){
+		
+	}
+	
+
 	
 	private void setUpLabels() {
 		labels = new Label[rows][columns];
@@ -23,6 +43,9 @@ public class BoardGUIPane extends GridPane{
 				add(l, col, row);
 			}
 		}
+		
+		labels[0][0].getStyleClass().clear();
+		labels[0][0].getStyleClass().add("snake");
 	}
 	
 	private void setUpLabel(final Label l, final int row, final int col){
