@@ -8,7 +8,9 @@ public class BoardGUIPane extends GridPane{
 	int rows = 25;
 	int columns = 51;
 	Snake snake;
-	String direction = "DOWN"; // Make enum
+//	String direction = "DOWN"; // Make enum
+	Food food = null;
+	
 	public void startGame(){
 		setUpLabels();
 		snake = new Snake(0,0);
@@ -18,12 +20,20 @@ public class BoardGUIPane extends GridPane{
 		int tempRow = snake.getRow();
 		int tempCol = snake.getCol();
 		if(snake.getRow() == 0){
+			if(rows - 1 == food.getRow() && tempCol == food.getCol()){
+				Main.score++;
+				food = null;
+			}
 			snake.setRow(rows - 1);
 			labels[rows - 1][tempCol].getStyleClass().clear();
 			labels[rows - 1][tempCol].getStyleClass().add("snake");
 			labels[tempRow][tempCol].getStyleClass().clear();
 			labels[tempRow][tempCol].getStyleClass().add("board");
 		} else{
+			if(tempRow - 1 == food.getRow() && tempCol == food.getCol()){
+				Main.score++;
+				food = null;
+			}
 			snake.setRow(tempRow - 1);
 			labels[tempRow - 1][tempCol].getStyleClass().clear();
 			labels[tempRow - 1][tempCol].getStyleClass().add("snake");
@@ -36,12 +46,20 @@ public class BoardGUIPane extends GridPane{
 		int tempRow = snake.getRow();
 		int tempCol = snake.getCol();
 		if(snake.getRow() == rows - 1){
+			if(0 == food.getRow() && tempCol == food.getCol()){
+				Main.score++;
+				food = null;
+			}
 			snake.setRow(0);
 			labels[0][tempCol].getStyleClass().clear();
 			labels[0][tempCol].getStyleClass().add("snake");
 			labels[tempRow][tempCol].getStyleClass().clear();
 			labels[tempRow][tempCol].getStyleClass().add("board");
 		} else{
+			if(tempRow + 1 == food.getRow() && tempCol == food.getCol()){
+				Main.score++;
+				food = null;
+			}
 			snake.setRow(tempRow + 1);
 			labels[tempRow + 1][tempCol].getStyleClass().clear();
 			labels[tempRow + 1][tempCol].getStyleClass().add("snake");
@@ -104,6 +122,26 @@ public class BoardGUIPane extends GridPane{
 		labels[0][0].getStyleClass().add("snake");
 	}
 	
+	public void getFoodExists(){
+		if(food == null){
+			int foodRow = 0;
+			int foodCol = 0;
+			boolean success = false;
+			while(success == false){
+				int min = 0;
+				foodRow = min + (int)(Math.random() * ((rows - 1 - min) + 1));
+				foodCol = min + (int)(Math.random() * ((columns - 1 - min) + 1));
+				if(!(foodRow == snake.getRow() && foodCol == snake.getCol())){
+					success = true;
+				}
+			}
+			food = new Food(foodRow, foodCol);
+			
+			labels[foodRow][foodCol].getStyleClass().clear();
+			labels[foodRow][foodCol].getStyleClass().add("food");
+		}
+	}
+	
 	private void setUpLabel(final Label l, final int row, final int col){
 //		l.setPrefWidth(50);
 		setMaxWidth(25);
@@ -112,5 +150,4 @@ public class BoardGUIPane extends GridPane{
 		l.setMinHeight(25);
 		l.getStyleClass().add("board");
 	}
-	
 }

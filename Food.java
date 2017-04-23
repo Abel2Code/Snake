@@ -6,4 +6,12 @@ public class Food {
 	public Food(int row, int column){
 		pos = new Coordinate(row, column, 'F');
 	}
+	
+	public int getRow(){
+		return pos.getRow();
+	}
+	
+	public int getCol(){
+		return pos.getColumn();
+	}
 }

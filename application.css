@@ -8,3 +8,7 @@
 .snake{
 	-fx-background-color: black;
 }
+
+.food{
+	-fx-background-color: yellow;
+}

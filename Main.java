@@ -35,6 +35,8 @@ public class Main extends Application {
 					} else if(event.getCode() == KeyCode.LEFT){
 						board.moveLeft();
 					}
+					
+					board.getFoodExists(); //If not creates one
 				}
 			});
 			root.setCenter(board);
