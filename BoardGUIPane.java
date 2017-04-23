@@ -8,7 +8,7 @@ public class BoardGUIPane extends GridPane{
 	int rows = 25;
 	int columns = 51;
 	Snake snake;
-	
+	String direction = "DOWN"; // Make enum
 	public void startGame(){
 		setUpLabels();
 		snake = new Snake(0,0);
