@@ -13,8 +13,8 @@ import javafx.stage.Stage;
 
 
 public class Main extends Application {
-	public static int score;	
-	public static Label scoreValue = new Label("0");
+	public static int score = 0;	
+	public static Label scoreValue = new Label("Score: " + score);
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -34,6 +34,8 @@ public class Main extends Application {
 						board.moveUp();
 					} else if(event.getCode() == KeyCode.LEFT){
 						board.moveLeft();
+					} else if(event.getCode() == KeyCode.A){
+						board.food = null;
 					}
 					
 					board.getFoodExists(); //If not creates one
@@ -42,8 +44,6 @@ public class Main extends Application {
 			root.setCenter(board);
 			
 			HBox bottem = new HBox();
-			
-			bottem.getChildren().add(new Label("Score: "));
 			bottem.getChildren().add(scoreValue);
 			bottem.getChildren().add(temp);
 			root.setBottom(bottem);

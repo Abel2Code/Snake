@@ -20,9 +20,8 @@ public class BoardGUIPane extends GridPane{
 		int tempRow = snake.getRow();
 		int tempCol = snake.getCol();
 		if(snake.getRow() == 0){
-			if(rows - 1 == food.getRow() && tempCol == food.getCol()){
-				Main.score++;
-				food = null;
+			if(food != null && rows - 1 == food.getRow() && tempCol == food.getCol()){
+				addToScore();
 			}
 			snake.setRow(rows - 1);
 			labels[rows - 1][tempCol].getStyleClass().clear();
@@ -30,9 +29,8 @@ public class BoardGUIPane extends GridPane{
 			labels[tempRow][tempCol].getStyleClass().clear();
 			labels[tempRow][tempCol].getStyleClass().add("board");
 		} else{
-			if(tempRow - 1 == food.getRow() && tempCol == food.getCol()){
-				Main.score++;
-				food = null;
+			if(food != null && tempRow - 1 == food.getRow() && tempCol == food.getCol()){
+				addToScore();
 			}
 			snake.setRow(tempRow - 1);
 			labels[tempRow - 1][tempCol].getStyleClass().clear();
@@ -46,9 +44,8 @@ public class BoardGUIPane extends GridPane{
 		int tempRow = snake.getRow();
 		int tempCol = snake.getCol();
 		if(snake.getRow() == rows - 1){
-			if(0 == food.getRow() && tempCol == food.getCol()){
-				Main.score++;
-				food = null;
+			if(food != null && 0 == food.getRow() && tempCol == food.getCol()){
+				addToScore();
 			}
 			snake.setRow(0);
 			labels[0][tempCol].getStyleClass().clear();
@@ -56,9 +53,8 @@ public class BoardGUIPane extends GridPane{
 			labels[tempRow][tempCol].getStyleClass().clear();
 			labels[tempRow][tempCol].getStyleClass().add("board");
 		} else{
-			if(tempRow + 1 == food.getRow() && tempCol == food.getCol()){
-				Main.score++;
-				food = null;
+			if(food != null && tempRow + 1 == food.getRow() && tempCol == food.getCol()){
+				addToScore();
 			}
 			snake.setRow(tempRow + 1);
 			labels[tempRow + 1][tempCol].getStyleClass().clear();
@@ -72,12 +68,18 @@ public class BoardGUIPane extends GridPane{
 		int tempRow = snake.getRow();
 		int tempCol = snake.getCol();
 		if(snake.getCol() == 0){
+			if(food != null && tempRow == food.getRow() && columns - 1 == food.getCol()){
+				addToScore();
+			}
 			snake.setCol(columns - 1);
 			labels[tempRow][columns - 1].getStyleClass().clear();
 			labels[tempRow][columns - 1].getStyleClass().add("snake");
 			labels[tempRow][tempCol].getStyleClass().clear();
 			labels[tempRow][tempCol].getStyleClass().add("board");
 		} else{
+			if(food != null && tempRow == food.getRow() && tempCol - 1 == food.getCol()){
+				addToScore();
+			}
 			snake.setCol(tempCol - 1);
 			labels[tempRow][tempCol- 1].getStyleClass().clear();
 			labels[tempRow][tempCol - 1].getStyleClass().add("snake");
@@ -90,18 +92,29 @@ public class BoardGUIPane extends GridPane{
 		int tempRow = snake.getRow();
 		int tempCol = snake.getCol();
 		if(snake.getCol() == columns - 1){
+			if(food != null && tempRow == food.getRow() && 0 == food.getCol()){
+				addToScore();
+			}
 			snake.setCol(0);
 			labels[tempRow][0].getStyleClass().clear();
 			labels[tempRow][0].getStyleClass().add("snake");
 			labels[tempRow][tempCol].getStyleClass().clear();
 			labels[tempRow][tempCol].getStyleClass().add("board");
 		} else{
+			if(food != null && tempRow == food.getRow() && tempCol + 1 == food.getCol()){
+				addToScore();
+			}
 			snake.setCol(tempCol + 1);
 			labels[tempRow][tempCol + 1].getStyleClass().clear();
 			labels[tempRow][tempCol + 1].getStyleClass().add("snake");
 			labels[tempRow][tempCol].getStyleClass().clear();
 			labels[tempRow][tempCol].getStyleClass().add("board");
 		}
+	}
+	
+	private void addToScore(){
+		food = null;
+		Main.scoreValue.setText("Score: " + ++Main.score);
 	}
 	
 
