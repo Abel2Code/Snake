@@ -1,6 +1,10 @@
 package application;
 	
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,49 +15,68 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-
 public class Main extends Application {
 	public static int score = 0;	
-	public static Label scoreValue = new Label("Score: " + score);
-	
+	public static Label scoreValue = new Label("" + score);
+	public static BoardGUIPane board = new BoardGUIPane();
+	public static boolean scoreUpdate = false;
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			BoardGUIPane board = new BoardGUIPane();
+			
 			BorderPane root = new BorderPane();
 			Scene scene = new Scene(root,1500,650);
-			Button temp = new Button();
-			temp.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>(){
-				@Override
-				public void handle(KeyEvent event) {
-					if(event.getCode() == KeyCode.DOWN){
-						board.moveDown();
-					} else if(event.getCode() == KeyCode.RIGHT){
-						board.moveRight();
-					} else if(event.getCode() == KeyCode.UP){
-						board.moveUp();
-					} else if(event.getCode() == KeyCode.LEFT){
-						board.moveLeft();
-					} else if(event.getCode() == KeyCode.A){
-						board.food = null;
-					}
-					
-					board.getFoodExists(); //If not creates one
-				}
-			});
 			root.setCenter(board);
 			
 			HBox bottem = new HBox();
+			bottem.getChildren().add(new Label("Score: "));
 			bottem.getChildren().add(scoreValue);
-			bottem.getChildren().add(temp);
 			root.setBottom(bottem);
-			//Scene scene = new Scene(board, 1500, 650);
-			
+			bottem.getStyleClass().add("score");
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			scene.getStylesheets().add("application/application.css");
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			board.startGame();
+			
+			scene.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>(){
+				@Override
+				public void handle(KeyEvent event) {
+					if(event.getCode() == KeyCode.DOWN){
+						board.setDirection("DOWN");
+					} else if(event.getCode() == KeyCode.RIGHT){
+						board.setDirection("RIGHT");
+					} else if(event.getCode() == KeyCode.UP){
+						board.setDirection("UP");
+					} else if(event.getCode() == KeyCode.LEFT){
+						board.setDirection("LEFT");
+					} 
+//					else if(event.getCode() == KeyCode.A){
+//						board.food = null;
+//					}
+					
+					
+				}
+			});
+			
+			Timer timer = new Timer();
+			TimerTask updateBoard = new TimerTask() {
+				
+				@Override
+				public void run() {
+					board.update();
+					updateScore();
+					board.getFoodExists(); //If not creates one
+					
+				}
+				
+				
+			};
+			
+			timer.schedule(updateBoard, 0, 50);
+
+
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -61,5 +84,22 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
+	}
+	
+	private static void updateScore(){
+		if(scoreUpdate){
+			Platform.runLater(new Runnable(){
+
+				@Override
+				public void run() {
+					score++;
+					scoreValue.setText(String.valueOf(score));
+					scoreUpdate = false;
+				}
+				
+			});
+			
+		}
+		
 	}
 }

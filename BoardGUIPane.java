@@ -8,7 +8,7 @@ public class BoardGUIPane extends GridPane{
 	int rows = 25;
 	int columns = 51;
 	Snake snake;
-//	String direction = "DOWN"; // Make enum
+	String direction = ""; // Make enum
 	Food food = null;
 	
 	public void startGame(){
@@ -16,7 +16,19 @@ public class BoardGUIPane extends GridPane{
 		snake = new Snake(0,0);
 	}
 	
-	public void moveUp(){
+	public void update(){
+		if(direction == "DOWN"){
+			moveDown();
+		} else if(direction == "UP"){
+			moveUp();
+		} else if(direction == "LEFT"){
+			moveLeft();
+		} else if(direction == "RIGHT"){
+			moveRight();
+		}
+	}
+	
+	private void moveUp(){
 		int tempRow = snake.getRow();
 		int tempCol = snake.getCol();
 		if(snake.getRow() == 0){
@@ -40,7 +52,7 @@ public class BoardGUIPane extends GridPane{
 		}
 	}
 	
-	public void moveDown(){
+	private void moveDown(){
 		int tempRow = snake.getRow();
 		int tempCol = snake.getCol();
 		if(snake.getRow() == rows - 1){
@@ -64,7 +76,7 @@ public class BoardGUIPane extends GridPane{
 		}
 	}
 	
-	public void moveLeft(){
+	private void moveLeft(){
 		int tempRow = snake.getRow();
 		int tempCol = snake.getCol();
 		if(snake.getCol() == 0){
@@ -88,7 +100,7 @@ public class BoardGUIPane extends GridPane{
 		}
 	}
 	
-	public void moveRight(){
+	private void moveRight(){
 		int tempRow = snake.getRow();
 		int tempCol = snake.getCol();
 		if(snake.getCol() == columns - 1){
@@ -114,7 +126,7 @@ public class BoardGUIPane extends GridPane{
 	
 	private void addToScore(){
 		food = null;
-		Main.scoreValue.setText("Score: " + ++Main.score);
+		Main.scoreUpdate = true;
 	}
 	
 
@@ -162,5 +174,9 @@ public class BoardGUIPane extends GridPane{
 		l.setMaxHeight(25);
 		l.setMinHeight(25);
 		l.getStyleClass().add("board");
+	}
+	
+	public void setDirection(String direction){
+		this.direction = direction;
 	}
 }
