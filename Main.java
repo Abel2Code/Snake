@@ -38,6 +38,7 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			board.startGame();
+			int counter = 0;
 			
 			scene.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>(){
 				@Override
@@ -67,7 +68,7 @@ public class Main extends Application {
 					board.update();
 					updateScore();
 					board.getFoodExists(); //If not creates one
-					
+					board.snake.length++;
 				}
 				
 				
@@ -84,6 +85,10 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
+	}
+	
+	private static void updateSnakeLength(){
+		
 	}
 	
 	private static void updateScore(){

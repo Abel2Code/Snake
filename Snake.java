@@ -1,9 +1,13 @@
 package application;
 
+import java.util.List;
+
 public class Snake {
 //	int row;
 //	int col;
 	Coordinate pos;
+	int length = 1;
+	List<Coordinate> lastPositions = new ArrayList<Coordinate>();
 //	int length; I might add length later. For now the snake will be 1 x 1
 	
 	public Snake(int row, int col){
