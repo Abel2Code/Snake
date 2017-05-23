@@ -1,5 +1,6 @@
 package application;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Snake {
@@ -12,6 +13,7 @@ public class Snake {
 	
 	public Snake(int row, int col){
 		pos = new Coordinate(row, col, 'S');
+		lastPositions.add(new Coordinate(0,0));
 	}
 	
 	public int getRow(){
@@ -28,5 +30,21 @@ public class Snake {
 	
 	public void setCol(int col){
 		pos.setColumn(col);
+	}
+	
+	public List<Coordinate> getLastPositions(){
+		return lastPositions;
+	}
+	
+	public int getLength(){
+		return length;
+	}
+	
+	public void setLength(int length){
+		this.length = length;
+	}
+	
+	public Coordinate getPos(){
+		return pos;
 	}
 }

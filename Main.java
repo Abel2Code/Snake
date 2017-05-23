@@ -68,7 +68,6 @@ public class Main extends Application {
 					board.update();
 					updateScore();
 					board.getFoodExists(); //If not creates one
-					board.snake.length++;
 				}
 				
 				

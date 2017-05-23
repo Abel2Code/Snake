@@ -11,6 +11,11 @@ public class Coordinate {
 		this.setColumn(column);
 		this.setType(type);
 	}
+	
+	public Coordinate(int row, int column){
+		this.setRow(row);
+		this.setColumn(column);
+	}
 
 	public int getRow() {
 		return row;

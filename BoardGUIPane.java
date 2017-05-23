@@ -179,4 +179,11 @@ public class BoardGUIPane extends GridPane{
 	public void setDirection(String direction){
 		this.direction = direction;
 	}
+	
+	private void updateSnakeLength(){
+		snake.getLastPositions().add(snake.getPos());
+		for(; snake.getLastPositions().size() > snake.getLength(); snake.getLastPositions().remove(0)){
+			
+		}
+	}
 }
