@@ -50,6 +50,7 @@ public class BoardGUIPane extends GridPane{
 			labels[tempRow][tempCol].getStyleClass().clear();
 			labels[tempRow][tempCol].getStyleClass().add("board");
 		}
+		updateSnakeLength();
 	}
 	
 	private void moveDown(){
@@ -74,6 +75,7 @@ public class BoardGUIPane extends GridPane{
 			labels[tempRow][tempCol].getStyleClass().clear();
 			labels[tempRow][tempCol].getStyleClass().add("board");
 		}
+		updateSnakeLength();
 	}
 	
 	private void moveLeft(){
@@ -98,6 +100,7 @@ public class BoardGUIPane extends GridPane{
 			labels[tempRow][tempCol].getStyleClass().clear();
 			labels[tempRow][tempCol].getStyleClass().add("board");
 		}
+		updateSnakeLength();
 	}
 	
 	private void moveRight(){
@@ -122,11 +125,14 @@ public class BoardGUIPane extends GridPane{
 			labels[tempRow][tempCol].getStyleClass().clear();
 			labels[tempRow][tempCol].getStyleClass().add("board");
 		}
+		updateSnakeLength();
 	}
 	
 	private void addToScore(){
 		food = null;
 		Main.scoreUpdate = true;
+		snake.setLength(snake.getLength() + 1);
+		System.out.println(snake.getLength());
 	}
 	
 
@@ -182,7 +188,18 @@ public class BoardGUIPane extends GridPane{
 	
 	private void updateSnakeLength(){
 		snake.getLastPositions().add(snake.getPos());
+		
 		for(; snake.getLastPositions().size() > snake.getLength(); snake.getLastPositions().remove(0)){
+		}
+		
+		for(int row = 0; row < rows; row++){
+			for(int col = 0; col < columns; col++){
+				labels[row][col].setText(" ");
+			}
+		}
+		
+		for(Coordinate position: snake.getLastPositions()){
+			labels[position.getRow()][position.getColumn()].setText("--");
 			
 		}
 	}
