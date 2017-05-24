@@ -7,7 +7,7 @@ public class Snake {
 //	int row;
 //	int col;
 	Coordinate pos;
-	int length = 1;
+	int length = 2;
 	List<Coordinate> lastPositions = new ArrayList<Coordinate>();
 //	int length; I might add length later. For now the snake will be 1 x 1
 	
