@@ -199,6 +199,14 @@ public class BoardGUIPane extends GridPane{
 			snake.getLastPositions().remove(0);
 		}
 		
+		for(int i = 0; i < snake.getLastPositions().size() - 1; i++){
+			Coordinate temp = snake.getLastPositions().get(i);
+			if(snake.getRow() == temp.getRow() && snake.getCol() == temp.getColumn()){
+				System.out.println("Game Over");
+				Main.timer.cancel();
+			}
+		}
+		
 		for(Coordinate i: snake.getLastPositions()){
 			labels[i.getRow()][i.getColumn()].getStyleClass().add("snake");
 		}

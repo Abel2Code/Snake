@@ -20,6 +20,8 @@ public class Main extends Application {
 	public static Label scoreValue = new Label("" + score);
 	public static BoardGUIPane board = new BoardGUIPane();
 	public static boolean scoreUpdate = false;
+	public static Timer timer = new Timer();
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -60,7 +62,7 @@ public class Main extends Application {
 				}
 			});
 			
-			Timer timer = new Timer();
+			
 			TimerTask updateBoard = new TimerTask() {
 				
 				@Override
