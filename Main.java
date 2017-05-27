@@ -46,12 +46,29 @@ public class Main extends Application {
 				@Override
 				public void handle(KeyEvent event) {
 					if(event.getCode() == KeyCode.DOWN){
+						if(board.getDirection() == "UP" || board.getDirection() == "DOWN"){
+							return;
+						}
+						
 						board.setDirection("DOWN");
 					} else if(event.getCode() == KeyCode.RIGHT){
+						if(board.getDirection() == "LEFT" || board.getDirection() == "RIGHT"){
+							return;
+						}
+						
 						board.setDirection("RIGHT");
 					} else if(event.getCode() == KeyCode.UP){
+						if(board.getDirection() == "UP" || board.getDirection() == "DOWN"){
+							return;
+						}
+						
 						board.setDirection("UP");
 					} else if(event.getCode() == KeyCode.LEFT){
+						if(board.getDirection() == "LEFT" || board.getDirection() == "RIGHT"){
+							return;
+						}
+
+						
 						board.setDirection("LEFT");
 					} 
 //					else if(event.getCode() == KeyCode.A){

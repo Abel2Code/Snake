@@ -31,6 +31,7 @@ public class BoardGUIPane extends GridPane{
 	private void moveUp(){
 		int tempRow = snake.getRow();
 		int tempCol = snake.getCol();
+		
 		if(snake.getRow() == 0){
 			if(food != null && rows - 1 == food.getRow() && tempCol == food.getCol()){
 				addToScore();
@@ -187,11 +188,6 @@ public class BoardGUIPane extends GridPane{
 	
 	private void updateSnakeLength(){
 		snake.getLastPositions().add(new Coordinate(snake.getRow(), snake.getCol()));
-
-//		for(Coordinate i: snake.getLastPositions()){
-//			System.out.println(i + ": Row: " + i.getRow() + " & Col: " + i.getColumn());
-//		}
-//		System.out.println();
 		
 		while(snake.getLastPositions().size() > snake.getLength()){
 			labels[snake.getLastPositions().get(0).getRow()][snake.getLastPositions().get(0).getColumn()].getStyleClass().clear();
@@ -210,5 +206,9 @@ public class BoardGUIPane extends GridPane{
 		for(Coordinate i: snake.getLastPositions()){
 			labels[i.getRow()][i.getColumn()].getStyleClass().add("snake");
 		}
+	}
+	
+	public String getDirection(){
+		return direction;
 	}
 }
