@@ -1,6 +1,9 @@
 package application;
 
+import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.InputEvent;
 import javafx.scene.layout.GridPane;
 
 public class BoardGUIPane extends GridPane{
@@ -198,8 +201,7 @@ public class BoardGUIPane extends GridPane{
 		for(int i = 0; i < snake.getLastPositions().size() - 1; i++){
 			Coordinate temp = snake.getLastPositions().get(i);
 			if(snake.getRow() == temp.getRow() && snake.getCol() == temp.getColumn()){
-				System.out.println("Game Over");
-				Main.timer.cancel();
+				Main.endGame();
 			}
 		}
 		

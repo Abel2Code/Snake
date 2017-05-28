@@ -5,12 +5,14 @@ import java.util.TimerTask;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -21,16 +23,18 @@ public class Main extends Application {
 	public static BoardGUIPane board = new BoardGUIPane();
 	public static boolean scoreUpdate = false;
 	public static Timer timer = new Timer();
+	public static HBox bottem = new HBox();
+	public static BorderPane root = new BorderPane();
 
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			
-			BorderPane root = new BorderPane();
+			
 			Scene scene = new Scene(root,1500,650);
 			root.setCenter(board);
 			
-			HBox bottem = new HBox();
+			
 			bottem.getChildren().add(new Label("Score: "));
 			bottem.getChildren().add(scoreValue);
 			root.setBottom(bottem);
@@ -71,9 +75,6 @@ public class Main extends Application {
 						
 						board.setDirection("LEFT");
 					} 
-//					else if(event.getCode() == KeyCode.A){
-//						board.food = null;
-//					}
 					
 					
 				}
@@ -124,5 +125,43 @@ public class Main extends Application {
 			
 		}
 		
+	}
+	
+	public static void endGame(){
+		Platform.runLater(new Runnable(){
+
+			@Override
+			public void run() {
+				Main.timer.cancel();
+				Button restart = new Button("Restart");
+				board = new BoardGUIPane();
+				root.setCenter(board);
+				restart.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<Event>(){
+					public void handle(Event event) {
+						TimerTask updateBoard = new TimerTask() {
+							
+							@Override
+							public void run() {
+								board.update();
+								updateScore();
+								board.getFoodExists(); //If not creates one\
+//								bottem.getChildren().remove(restart);
+							}
+							
+							
+						};						
+						score = 0;
+						scoreValue.setText("0");
+						board.startGame();
+						timer = new Timer();
+						timer.schedule(updateBoard, 0, 50);
+					}
+				});
+				
+				
+				bottem.getChildren().add(restart);
+			}
+			
+		});
 	}
 }
