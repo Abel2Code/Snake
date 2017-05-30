@@ -44,8 +44,38 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			board.startGame();
-			int counter = 0;
+			Button restart = new Button("Restart");
+			restart.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<Event>(){
+				public void handle(Event event) {
+					TimerTask updateBoard = new TimerTask() {
+						
+						@Override
+						public void run() {
+							board.update();
+							updateScore();
+							board.getFoodExists(); //If not creates one\							
+						}
+						
+						
+					};	
+					
+					Platform.runLater(new Runnable(){
+
+						@Override
+						public void run() {
+							score = 0;
+							scoreValue.setText("0");
+							board.startGame();
+							timer = new Timer();
+							timer.schedule(updateBoard, 0, 50);
+						}
+						
+					});				
+				}
+			});
 			
+			
+			bottem.getChildren().add(restart);			
 			scene.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>(){
 				@Override
 				public void handle(KeyEvent event) {
@@ -127,41 +157,20 @@ public class Main extends Application {
 		
 	}
 	
-	public static void endGame(){
+	public static void endGame(){		
+		
 		Platform.runLater(new Runnable(){
 
 			@Override
 			public void run() {
 				Main.timer.cancel();
-				Button restart = new Button("Restart");
+				
 				board = new BoardGUIPane();
 				root.setCenter(board);
-				restart.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<Event>(){
-					public void handle(Event event) {
-						TimerTask updateBoard = new TimerTask() {
-							
-							@Override
-							public void run() {
-								board.update();
-								updateScore();
-								board.getFoodExists(); //If not creates one\
-//								bottem.getChildren().remove(restart);
-							}
-							
-							
-						};						
-						score = 0;
-						scoreValue.setText("0");
-						board.startGame();
-						timer = new Timer();
-						timer.schedule(updateBoard, 0, 50);
-					}
-				});
-				
-				
-				bottem.getChildren().add(restart);
 			}
 			
 		});
+		
+				
 	}
 }
