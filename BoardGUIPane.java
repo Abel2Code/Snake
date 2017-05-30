@@ -1,9 +1,6 @@
 package application;
 
-import javafx.event.EventHandler;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.InputEvent;
 import javafx.scene.layout.GridPane;
 
 public class BoardGUIPane extends GridPane{
@@ -11,7 +8,7 @@ public class BoardGUIPane extends GridPane{
 	int rows = 25;
 	int columns = 51;
 	Snake snake;
-	String direction = ""; // Make enum
+	Direction direction = Direction.NONE; // Make enum
 	Food food = null;
 	
 	public void startGame(){
@@ -20,13 +17,13 @@ public class BoardGUIPane extends GridPane{
 	}
 	
 	public void update(){
-		if(direction == "DOWN"){
+		if(direction == Direction.DOWN){
 			moveDown();
-		} else if(direction == "UP"){
+		} else if(direction == Direction.UP){
 			moveUp();
-		} else if(direction == "LEFT"){
+		} else if(direction == Direction.LEFT){
 			moveLeft();
-		} else if(direction == "RIGHT"){
+		} else if(direction == Direction.RIGHT){
 			moveRight();
 		}
 	}
@@ -76,8 +73,6 @@ public class BoardGUIPane extends GridPane{
 			snake.setRow(tempRow + 1);
 			labels[tempRow + 1][tempCol].getStyleClass().clear();
 			labels[tempRow + 1][tempCol].getStyleClass().add("snake");
-//			labels[tempRow][tempCol].getStyleClass().clear();
-//			labels[tempRow][tempCol].getStyleClass().add("board");
 		}
 		updateSnakeLength();
 	}
@@ -135,7 +130,7 @@ public class BoardGUIPane extends GridPane{
 	private void addToScore(){
 		food = null;
 		Main.scoreUpdate = true;
-		snake.setLength(snake.getLength() + 1);
+		snake.setLength(snake.getLength() + 3);
 	}
 	
 
@@ -167,6 +162,12 @@ public class BoardGUIPane extends GridPane{
 				foodCol = min + (int)(Math.random() * ((columns - 1 - min) + 1));
 				if(!(foodRow == snake.getRow() && foodCol == snake.getCol())){
 					success = true;
+					for(Coordinate temp: snake.getLastPositions()){
+						if(temp.getColumn() == foodCol && temp.getRow() == foodRow){
+							success = false;
+							break;
+						}
+					}
 				}
 			}
 			food = new Food(foodRow, foodCol);
@@ -174,10 +175,10 @@ public class BoardGUIPane extends GridPane{
 			labels[foodRow][foodCol].getStyleClass().clear();
 			labels[foodRow][foodCol].getStyleClass().add("food");
 		}
+		
 	}
 	
 	private void setUpLabel(final Label l, final int row, final int col){
-//		l.setPrefWidth(50);
 		setMaxWidth(25);
 		l.setMinWidth(25);
 		l.setMaxHeight(25);
@@ -185,7 +186,7 @@ public class BoardGUIPane extends GridPane{
 		l.getStyleClass().add("board");
 	}
 	
-	public void setDirection(String direction){
+	public void setDirection(Direction direction){
 		this.direction = direction;
 	}
 	
@@ -210,7 +211,7 @@ public class BoardGUIPane extends GridPane{
 		}
 	}
 	
-	public String getDirection(){
+	public Direction getDirection(){
 		return direction;
 	}
 }

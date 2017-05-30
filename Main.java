@@ -23,14 +23,14 @@ public class Main extends Application {
 	public static BoardGUIPane board = new BoardGUIPane();
 	public static boolean scoreUpdate = false;
 	public static Timer timer = new Timer();
-	public static HBox bottem = new HBox();
 	public static BorderPane root = new BorderPane();
+	public static boolean hasUpdated = false;
 
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			
-			
+			HBox bottem = new HBox();
 			Scene scene = new Scene(root,1500,650);
 			root.setCenter(board);
 			
@@ -53,7 +53,8 @@ public class Main extends Application {
 						public void run() {
 							board.update();
 							updateScore();
-							board.getFoodExists(); //If not creates one\							
+							board.getFoodExists(); //If not creates one		
+							hasUpdated = true;
 						}
 						
 						
@@ -63,6 +64,9 @@ public class Main extends Application {
 
 						@Override
 						public void run() {
+							Main.timer.cancel();
+							board = new BoardGUIPane();
+							root.setCenter(board);
 							score = 0;
 							scoreValue.setText("0");
 							board.startGame();
@@ -75,40 +79,72 @@ public class Main extends Application {
 			});
 			
 			
-			bottem.getChildren().add(restart);			
+			bottem.getChildren().addAll(new Label("\t\t"),restart);			
 			scene.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>(){
 				@Override
 				public void handle(KeyEvent event) {
-					if(event.getCode() == KeyCode.DOWN){
-						if(board.getDirection() == "UP" || board.getDirection() == "DOWN"){
-							return;
+					if(hasUpdated = true){
+						if(event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S){
+							if(board.getDirection() == Direction.UP || board.getDirection() == Direction.DOWN){
+								return;
+							}
+							hasUpdated = false;
+							board.setDirection(Direction.DOWN);
+						} else if(event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D){
+							if(board.getDirection() == Direction.LEFT || board.getDirection() == Direction.RIGHT){
+								return;
+							}
+							hasUpdated = false;
+							board.setDirection(Direction.RIGHT);
+						} else if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W){
+							if(board.getDirection() == Direction.UP || board.getDirection() == Direction.DOWN){
+								return;
+							}
+							hasUpdated = false;
+							board.setDirection(Direction.UP);
+						} else if(event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A){
+							if(board.getDirection() == Direction.LEFT || board.getDirection() == Direction.RIGHT){
+								return;
+							}
+							hasUpdated = false;
+							board.setDirection(Direction.LEFT);
+						} 
+					}
+					if(event.getCode() == KeyCode.R){
+							TimerTask updateBoard = new TimerTask() {
+								
+								@Override
+								public void run() {
+									board.update();
+									updateScore();
+									board.getFoodExists(); //If not creates one	
+									hasUpdated = true;
+								}
+								
+								
+							};	
+							
+							Platform.runLater(new Runnable(){
+	
+								@Override
+								public void run() {
+									Main.timer.cancel();
+									board = new BoardGUIPane();
+									root.setCenter(board);
+									score = 0;
+									scoreValue.setText("0");
+									board.startGame();
+									timer = new Timer();
+									timer.schedule(updateBoard, 0, 50);
+								}
+								
+							});				
 						}
+						} 
 						
-						board.setDirection("DOWN");
-					} else if(event.getCode() == KeyCode.RIGHT){
-						if(board.getDirection() == "LEFT" || board.getDirection() == "RIGHT"){
-							return;
-						}
 						
-						board.setDirection("RIGHT");
-					} else if(event.getCode() == KeyCode.UP){
-						if(board.getDirection() == "UP" || board.getDirection() == "DOWN"){
-							return;
-						}
-						
-						board.setDirection("UP");
-					} else if(event.getCode() == KeyCode.LEFT){
-						if(board.getDirection() == "LEFT" || board.getDirection() == "RIGHT"){
-							return;
-						}
-
-						
-						board.setDirection("LEFT");
-					} 
-					
-					
-				}
-			});
+					}
+			);
 			
 			
 			TimerTask updateBoard = new TimerTask() {
@@ -118,6 +154,7 @@ public class Main extends Application {
 					board.update();
 					updateScore();
 					board.getFoodExists(); //If not creates one
+					hasUpdated = true;
 				}
 				
 				
@@ -134,10 +171,6 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
-	}
-	
-	private static void updateSnakeLength(){
-		
 	}
 	
 	private static void updateScore(){
@@ -165,8 +198,10 @@ public class Main extends Application {
 			public void run() {
 				Main.timer.cancel();
 				
-				board = new BoardGUIPane();
-				root.setCenter(board);
+				Label gameOver = new Label("GAME OVER");
+				gameOver.getStyleClass().add("gameOver");
+				
+				root.setCenter(gameOver);
 			}
 			
 		});

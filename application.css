@@ -20,3 +20,7 @@
 	-fx-border-color: red;
 	-fx-alignment: center;
 }
+
+.gameOver{
+	-fx-font-size: 100px;
+}

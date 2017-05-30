@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Snake {
-//	int row;
-//	int col;
 	Coordinate pos;
-	int length = 10;
+	int length = 5;
 	List<Coordinate> lastPositions = new ArrayList<Coordinate>();
-//	int length; I might add length later. For now the snake will be 1 x 1
 	
 	public Snake(int row, int col){
 		pos = new Coordinate(row, col, 'S');

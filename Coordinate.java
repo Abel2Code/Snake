@@ -1,7 +1,6 @@
 package application;
 
 public class Coordinate {
-	//For game's interpretation of board
 	private int row;
 	private int column;
 	private char type; // ' ' empty space, 'S' Snake, 'F' Food
