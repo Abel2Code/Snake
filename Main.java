@@ -10,6 +10,8 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -33,7 +35,6 @@ public class Main extends Application {
 			HBox bottem = new HBox();
 			Scene scene = new Scene(root,1500,650);
 			root.setCenter(board);
-			
 			
 			bottem.getChildren().add(new Label("Score: "));
 			bottem.getChildren().add(scoreValue);
@@ -197,11 +198,14 @@ public class Main extends Application {
 			@Override
 			public void run() {
 				Main.timer.cancel();
+				ImageView image = new ImageView();
+				image.setImage(new Image("application/Images/GameOver.png"));
+//				image.setFitHeight(620);
+//				image.setFitWidth(1250);
 				
-				Label gameOver = new Label("GAME OVER");
-				gameOver.getStyleClass().add("gameOver");
-				
-				root.setCenter(gameOver);
+				image.setFitHeight(300);
+				image.setFitWidth(600);
+				root.setCenter(image);
 			}
 			
 		});

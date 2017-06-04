@@ -17,10 +17,12 @@
 	-fx-border-width: 1.0 1.0 1.0 1.0;
 	-fx-border-style: solid;
 	-fx-background-color: green;
-	-fx-border-color: red;
 	-fx-alignment: center;
 }
 
 .gameOver{
-	-fx-font-size: 100px;
+	-fx-background-image: url("http://derekedgington.com/home/wp-content/uploads/2016/10/GameOver-DE2-White.png");
+	-fx-background-size: 2000px, 3000px;
+	-fx-background-repeat: no-repeat;
 }
+
