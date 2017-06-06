@@ -200,11 +200,9 @@ public class Main extends Application {
 				Main.timer.cancel();
 				ImageView image = new ImageView();
 				image.setImage(new Image("application/Images/GameOver.png"));
-//				image.setFitHeight(620);
-//				image.setFitWidth(1250);
 				
-				image.setFitHeight(300);
-				image.setFitWidth(600);
+				image.setFitHeight(261);
+				image.setFitWidth(1000);
 				root.setCenter(image);
 			}
 			
